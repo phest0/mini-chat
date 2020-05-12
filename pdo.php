@@ -1,0 +1,10 @@
+<?php 
+$db_user = "Phesto";
+$db_passwd = "";
+$db_host = "localhost";
+$db_port = "3306";
+$db_name = "tp_chat";
+$db_dataSourceName = "mysql:host=$db_host;port=$db_port;dbname=$db_name";
+
+$PDO = new PDO($db_dataSourceName, $db_user, $db_passwd);
+$PDO->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
