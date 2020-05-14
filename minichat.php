@@ -25,61 +25,60 @@ $fetch_chat_request = $chat_request->fetchAll(PDO::FETCH_ASSOC);
             <div class="col-12">
                 <h2 class="mb-5">Chat</h2>
                 <div class="container">
+                    <?php if (isset($_SESSION['userPseudo'])) { ?>
+                        <?php for ($i = 0; $i < count($fetch_chat_request); $i++) {
+                            $current = $fetch_chat_request[$i];
+                            if ($i % 2) { ?>
 
-                    <?php for ($i = 0; $i < count($fetch_chat_request); $i++) {
-                        $current = $fetch_chat_request[$i];
-                        if ($i % 2) { ?>
+                                <!-- message 1 start -->
 
-                            <!-- message 1 start -->
+                                <div class="row">
+                                    <div class="col d-flex flex-row flex-row-reverse">
+                                        <!-- message 1 -->
+                                        <div class="message-candidate w-75">
+                                            <div class="row">
+                                                <div class="col-8 col-lg-6">
+                                                    <img src="http://imgc.allpostersimages.com/images/P-473-488-90/68/6896/2GOJ100Z/posters/despicable-me-2-minions-movie-poster.jpg" class="message-photo">
+                                                    <h4 class="message-name"> <?php echo htmlspecialchars($current['pseudo']); ?> </h4>
+                                                </div>
+
+                                            </div>
+                                            <div class="row message-text">
+                                                <?php echo htmlspecialchars($current['message']); ?>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- message 1 end -->
+
+                            <?php continue;
+                            } ?>
+
+                            <!-- message 2 start -->
 
                             <div class="row">
-                                <div class="col d-flex flex-row flex-row-reverse">
-                                    <!-- message 1 -->
-                                    <div class="message-candidate w-75">
+                                <div class="col">
+                                    <div class="message-hiring-manager">
                                         <div class="row">
                                             <div class="col-8 col-lg-6">
                                                 <img src="http://imgc.allpostersimages.com/images/P-473-488-90/68/6896/2GOJ100Z/posters/despicable-me-2-minions-movie-poster.jpg" class="message-photo">
-                                                <h4 class="message-name"> <?php echo htmlspecialchars($current['pseudo']); ?> </h4>
+                                                <h4 class="message-name"><?php echo htmlspecialchars($current['pseudo']); ?></h4>
                                             </div>
 
                                         </div>
-                                        <div class="row message-text">
+                                        <div class="row message-text ">
                                             <?php echo htmlspecialchars($current['message']); ?>
                                         </div>
                                     </div>
                                 </div>
                             </div>
 
-                            <!-- message 1 end -->
+                        <?php }  ?>
 
-                        <?php continue;
-                        } ?>
+                        <!-- message 2 end -->
 
-                        <!-- message 2 start -->
-
-                        <div class="row">
-                            <div class="col">
-                                <div class="message-hiring-manager">
-                                    <div class="row">
-                                        <div class="col-8 col-lg-6">
-                                            <img src="http://imgc.allpostersimages.com/images/P-473-488-90/68/6896/2GOJ100Z/posters/despicable-me-2-minions-movie-poster.jpg" class="message-photo">
-                                            <h4 class="message-name"><?php echo htmlspecialchars($current['pseudo']); ?></h4>
-                                        </div>
-
-                                    </div>
-                                    <div class="row message-text ">
-                                        <?php echo htmlspecialchars($current['message']); ?>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-                    <?php }  ?>
-
-                    <!-- message 2 end -->
-
-                    <!-- typing start -->
-                    <?php if (isset($_SESSION['userPseudo'])) { ?>
+                        <!-- typing start -->
 
                         <form method="post" action="minichat_post.php" class="mt-5">
                             <div class="form-group col-4">
