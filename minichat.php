@@ -1,5 +1,5 @@
 <?php
-
+session_start();
 include 'pdo.php';
 
 $chat_request = $PDO->query('SELECT pseudo, message FROM chat3');
@@ -29,10 +29,13 @@ $fetch_chat_request = $chat_request->fetchAll(PDO::FETCH_ASSOC);
                     <?php for ($i = 0; $i < count($fetch_chat_request); $i++) {
                         $current = $fetch_chat_request[$i];
                         if ($i % 2) { ?>
+
+                            <!-- message 1 start -->
+
                             <div class="row">
                                 <div class="col d-flex flex-row flex-row-reverse">
                                     <!-- message 1 -->
-                                    <div class="message-candidate">
+                                    <div class="message-candidate w-75">
                                         <div class="row">
                                             <div class="col-8 col-lg-6">
                                                 <img src="http://imgc.allpostersimages.com/images/P-473-488-90/68/6896/2GOJ100Z/posters/despicable-me-2-minions-movie-poster.jpg" class="message-photo">
@@ -46,8 +49,13 @@ $fetch_chat_request = $chat_request->fetchAll(PDO::FETCH_ASSOC);
                                     </div>
                                 </div>
                             </div>
+
+                            <!-- message 1 end -->
+
                         <?php continue;
                         } ?>
+
+                        <!-- message 2 start -->
 
                         <div class="row">
                             <div class="col">
@@ -67,21 +75,44 @@ $fetch_chat_request = $chat_request->fetchAll(PDO::FETCH_ASSOC);
                         </div>
 
                     <?php }  ?>
-                    <!-- message 2 -->
 
-                    <!-- //typing -->
-                    <form method="post" action="minichat_post.php">
-                        <div class="form-group col-4">
-                            <label for="pseudo">Pseudo</label>
-                            <input type="text" class="form-control" id="pseudo" type="text" name="pseudo">
-                        </div>
-                        <div class="form-group col-12">
-                            <label for="message">Message</label>
-                            <input type="text" class="form-control" id="message" name="message">
-                            <button type="submit" class="btn btn-primary mt-3">Envoyer</button>
-                        </div>
+                    <!-- message 2 end -->
 
-                    </form>
+                    <!-- typing start -->
+                    <?php if (isset($_SESSION['userPseudo'])) { ?>
+
+                        <form method="post" action="minichat_post.php" class="mt-5">
+                            <div class="form-group col-4">
+                                <label for="pseudo">Bonjour <b><?php echo $_SESSION['userPseudo']; ?></b> !</label>
+                                <!-- <input type="text" class="form-control" id="pseudo" type="text" name="pseudo"> -->
+                            </div>
+
+                            <div class="form-group col-12">
+                                <label for="message">Message</label>
+                                <input type="text" class="form-control" id="message" name="message">
+                                <button type="submit" class="btn btn-primary mt-3">Envoyer</button>
+                                <a class="btn btn-danger mt-3 ml-2" href="minichat_logout.php">Se déconnecter</a>
+                            </div>
+
+                        </form>
+
+                    <?php } else { ?>
+
+                        <form method="post" action="minichat_login.php">
+                            <div class="form-group col-4">
+                                <label for="pseudo">Pseudo</label>
+                                <input type="text" class="form-control" id="pseudo" type="text" name="pseudo">
+                            </div>
+
+                            <div class="form-group col-4">
+                                <label for="password">Mot de passe</label>
+                                <input type="password" class="form-control" id="password" name="password">
+                                <button type="submit" class="btn btn-primary mt-3">Envoyer</button>
+                            </div>
+                        </form>
+
+                    <?php } ?>
+                    <!-- //typing end -->
 
                 </div>
             </div>
